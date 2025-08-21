@@ -47,7 +47,7 @@ Follow these instructions to run the entire pipeline on your local machine.
 
 1.  **Clone the repository:**
     ```bash
-    git clone <(https://github.com/gundavyshnavi16/DATA_PIPELINE.git)>
+    git clone https://github.com/gundavyshnavi16/DATA_PIPELINE.git
     cd superstore_pipeline
     ```
 
