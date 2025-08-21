@@ -18,4 +18,4 @@ select
   total_quantity,
   total_profit,
   round(total_profit / nullif(total_sales, 0) * 100, 2) as profit_margin_percent
-from daily;
+from daily
