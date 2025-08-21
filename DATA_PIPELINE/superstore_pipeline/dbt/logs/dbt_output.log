@@ -1,0 +1,68 @@
+[0m14:31:54  Running with dbt=1.8.3
+[0m14:31:54  Registered adapter: postgres=1.8.2
+[0m14:31:55  Found 3 models, 19 data tests, 1 source, 415 macros
+[0m14:31:55  
+[0m14:31:55  Concurrency: 1 threads (target='dev')
+[0m14:31:55  
+[0m14:31:55  1 of 3 START sql view model analytics.stg_orders ............................... [RUN]
+[0m14:31:55  1 of 3 OK created sql view model analytics.stg_orders .......................... [[32mCREATE VIEW[0m in 0.08s]
+[0m14:31:55  2 of 3 START sql view model analytics.int_sales_by_date ........................ [RUN]
+[0m14:31:55  2 of 3 OK created sql view model analytics.int_sales_by_date ................... [[32mCREATE VIEW[0m in 0.02s]
+[0m14:31:55  3 of 3 START sql incremental model analytics.fct_daily_sales ................... [RUN]
+[0m14:31:55  3 of 3 OK created sql incremental model analytics.fct_daily_sales .............. [[32mINSERT 0 0[0m in 0.09s]
+[0m14:31:55  
+[0m14:31:55  Finished running 2 view models, 1 incremental model in 0 hours 0 minutes and 0.32 seconds (0.32s).
+[0m14:31:55  
+[0m14:31:55  [32mCompleted successfully[0m
+[0m14:31:55  
+[0m14:31:55  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+[0m14:31:57  Running with dbt=1.8.3
+[0m14:31:57  Registered adapter: postgres=1.8.2
+[0m14:31:57  Found 3 models, 19 data tests, 1 source, 415 macros
+[0m14:31:57  
+[0m14:31:57  Concurrency: 1 threads (target='dev')
+[0m14:31:57  
+[0m14:31:57  1 of 19 START test Invalid_ship_date ........................................... [RUN]
+[0m14:31:57  1 of 19 PASS Invalid_ship_date ................................................. [[32mPASS[0m in 0.03s]
+[0m14:31:57  2 of 19 START test accepted_values_stg_orders_region__East__West__Central__South  [RUN]
+[0m14:31:57  2 of 19 PASS accepted_values_stg_orders_region__East__West__Central__South ..... [[32mPASS[0m in 0.02s]
+[0m14:31:57  3 of 19 START test accepted_values_stg_orders_segment__Consumer__Corporate__Home_Office  [RUN]
+[0m14:31:57  3 of 19 PASS accepted_values_stg_orders_segment__Consumer__Corporate__Home_Office  [[32mPASS[0m in 0.02s]
+[0m14:31:57  4 of 19 START test not_null_fct_daily_sales_order_date ......................... [RUN]
+[0m14:31:57  4 of 19 PASS not_null_fct_daily_sales_order_date ............................... [[32mPASS[0m in 0.02s]
+[0m14:31:57  5 of 19 START test not_null_fct_daily_sales_profit_margin_percent .............. [RUN]
+[0m14:31:57  5 of 19 PASS not_null_fct_daily_sales_profit_margin_percent .................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  6 of 19 START test not_null_fct_daily_sales_total_profit ....................... [RUN]
+[0m14:31:57  6 of 19 PASS not_null_fct_daily_sales_total_profit ............................. [[32mPASS[0m in 0.01s]
+[0m14:31:57  7 of 19 START test not_null_fct_daily_sales_total_quantity ..................... [RUN]
+[0m14:31:57  7 of 19 PASS not_null_fct_daily_sales_total_quantity ........................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  8 of 19 START test not_null_fct_daily_sales_total_sales ........................ [RUN]
+[0m14:31:57  8 of 19 PASS not_null_fct_daily_sales_total_sales .............................. [[32mPASS[0m in 0.01s]
+[0m14:31:57  9 of 19 START test not_null_stg_orders_discount ................................ [RUN]
+[0m14:31:57  9 of 19 PASS not_null_stg_orders_discount ...................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  10 of 19 START test not_null_stg_orders_order_date ............................. [RUN]
+[0m14:31:57  10 of 19 PASS not_null_stg_orders_order_date ................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  11 of 19 START test not_null_stg_orders_order_id ............................... [RUN]
+[0m14:31:57  11 of 19 PASS not_null_stg_orders_order_id ..................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  12 of 19 START test not_null_stg_orders_profit ................................. [RUN]
+[0m14:31:57  12 of 19 PASS not_null_stg_orders_profit ....................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  13 of 19 START test not_null_stg_orders_quantity ............................... [RUN]
+[0m14:31:57  13 of 19 PASS not_null_stg_orders_quantity ..................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  14 of 19 START test not_null_stg_orders_region ................................. [RUN]
+[0m14:31:57  14 of 19 PASS not_null_stg_orders_region ....................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  15 of 19 START test not_null_stg_orders_sales .................................. [RUN]
+[0m14:31:57  15 of 19 PASS not_null_stg_orders_sales ........................................ [[32mPASS[0m in 0.01s]
+[0m14:31:57  16 of 19 START test not_null_stg_orders_segment ................................ [RUN]
+[0m14:31:57  16 of 19 PASS not_null_stg_orders_segment ...................................... [[32mPASS[0m in 0.04s]
+[0m14:31:57  17 of 19 START test not_null_stg_orders_ship_date .............................. [RUN]
+[0m14:31:57  17 of 19 PASS not_null_stg_orders_ship_date .................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  18 of 19 START test unique_fct_daily_sales_order_date .......................... [RUN]
+[0m14:31:57  18 of 19 PASS unique_fct_daily_sales_order_date ................................ [[32mPASS[0m in 0.02s]
+[0m14:31:57  19 of 19 START test valid_discount ............................................. [RUN]
+[0m14:31:57  19 of 19 PASS valid_discount ................................................... [[32mPASS[0m in 0.01s]
+[0m14:31:57  
+[0m14:31:57  Finished running 19 data tests in 0 hours 0 minutes and 0.45 seconds (0.45s).
+[0m14:31:57  
+[0m14:31:57  [32mCompleted successfully[0m
+[0m14:31:57  
+[0m14:31:57  Done. PASS=19 WARN=0 ERROR=0 SKIP=0 TOTAL=19

@@ -1,0 +1,6 @@
+-- A test fails if it returns rows.
+-- This query will find any orders where the shipping happened before the order was placed.
+
+select *
+from {{ ref('stg_orders') }}
+where ship_date < order_date

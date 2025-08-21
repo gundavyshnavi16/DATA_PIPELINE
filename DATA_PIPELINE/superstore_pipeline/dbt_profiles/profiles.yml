@@ -1,0 +1,14 @@
+superstore_project:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      port: 5432
+      user: superuser
+      password: superpass
+      dbname: superstore
+      schema: analytics
+      threads: 1
+
+# tells dbt how to connect to postgres

@@ -1,0 +1,117 @@
+# End-to-End Superstore Sales Data Pipeline
+
+*Last Validated: August 21, 2025*
+
+This project demonstrates a complete, end-to-end ELT (Extract, Load, Transform) data pipeline built with modern data engineering tools. It processes raw Superstore sales data from a CSV file, loads it into a PostgreSQL database, transforms it into an analytics-ready format using dbt, and validates the data with automated tests.
+
+The entire environment is containerized with Docker, making it fully reproducible and portable.
+
+## Key Features
+
+* **Infrastructure as Code (IaC):** The entire environment, including the database, Python environment, and dbt, is defined and managed in code using Docker Compose.
+* **Modern ELT Paradigm:** Follows the modern Extract, Load, Transform workflow. Data is loaded into the warehouse first, and then transformed using the power of dbt and SQL.
+* **Automated Data Quality Testing:** Integrated data testing with dbt ensures the reliability and integrity of the transformed data.
+* **Orchestration:** A simple shell script automates the entire pipeline, running all steps in sequence with a single command.
+* **Reproducibility:** Anyone with Docker can clone this repository and reproduce the exact same environment and results in minutes.
+
+## Tech Stack
+
+* **Containerization:** Docker & Docker Compose
+* **Data Warehouse:** PostgreSQL
+* **Extract & Load:** Python (with Pandas, SQLAlchemy)
+* **Transform & Test:** dbt (Data Build Tool)
+* **Orchestration:** Bash Shell Script
+* **Data Visualization/Validation:** pgAdmin
+
+## Architecture
+
+The pipeline uses a set of interacting Docker containers that are managed by Docker Compose. The data flows as follows:
+
+```
+[Local CSV File] -> [Python/ETL Container] -> [PostgreSQL Container] <-> [dbt Container]
+                                                  ^
+                                                  |
+                                             [pgAdmin Container] (For Viewing)
+```
+
+## Local Setup & Usage
+
+Follow these instructions to run the entire pipeline on your local machine.
+
+### Prerequisites
+
+* Docker Desktop must be installed and running on your machine.
+* A terminal or command-line interface (like Terminal on Mac).
+
+### Installation & Configuration
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd superstore_pipeline
+    ```
+
+2.  **Configuration:** No extra configuration is needed! The `dbt_profiles/profiles.yml` file is already set up to connect the `dbt` container to the `postgres` container within the Docker network.
+
+### Running the Pipeline
+
+1.  **Make the script executable** (you only need to do this once):
+    ```bash
+    chmod +x orchestrate_pipeline.sh
+    ```
+
+2.  **Execute the pipeline:**
+    ```bash
+    ./orchestrate_pipeline.sh
+    ```
+
+### Accessing the Results
+
+1.  **pgAdmin (Database UI):**
+    * URL: `http://localhost:8080`
+    * Login Email: `admin@admin.com`
+    * Login Password: `admin`
+
+2.  **Connect to the Database in pgAdmin:**
+    * Right-click `Servers` -> `Create` -> `Server...`
+    * **General Tab:** Give it a name (e.g., `Superstore DB`).
+    * **Connection Tab:**
+        * Host name/address: `postgres`
+        * Port: `5432`
+        * Maintenance database: `superstore`
+        * Username: `superuser`
+        * Password: `superpass`
+    * Click `Save`.
+
+3.  **View the Data:**
+    * **Raw Data:** Navigate to `Databases` -> `superstore` -> `Schemas` -> `public` -> `Tables`. You will find the raw `staging_orders` table here.
+    * **Transformed dbt Models:** Navigate to `Databases` -> `superstore` -> `Schemas` -> `analytics`. You will find your final tables (like `fct_daily_sales`) and views (like `stg_orders`) here.
+
+## Pipeline Workflow
+
+The `orchestrate_pipeline.sh` script performs the following steps in order:
+
+1.  **Start Services:** Starts all containers (`postgres`, `etl`, `dbt`, `pgadmin`) in the background using `docker compose up -d`.
+2.  **Extract & Load:** Executes the `etl/extract_load.py` script inside the `etl` container to load the CSV data into Postgres.
+3.  **Transform:** Executes `dbt run` to transform the raw data into final models.
+4.  **Test:** Executes `dbt test` to run all data quality tests on the transformed models.
+5.  **Log Metadata:** Updates a `pipeline_metadata` table in the database with the results of the run, including status and test counts.
+
+## Project Structure
+
+```
+.
+├── data/              # Contains the raw source data (CSV)
+├── dbt/               # The dbt project folder
+│   ├── models/        # dbt models (SQL transformations)
+│   ├── tests/         # Custom dbt singular tests
+│   └── dbt_project.yml # dbt project configuration
+├── dbt_profiles/      # dbt connection profiles
+│   └── profiles.yml
+├── etl/               # Python scripts for Extract/Load
+│   └── extract_load.py
+│   └── requirements.txt
+├── docker-compose.yml # Defines all Docker services
+└── orchestrate_pipeline.sh # The main pipeline orchestration script
+```
+

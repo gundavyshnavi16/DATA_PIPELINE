@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: superpass
+      POSTGRES_DB: superstore
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  etl:
+    image: python:3.10
+    container_name: etl
+    volumes:
+      # This volume mounts your project code into the container
+      - .:/app
+      - ./data:/data
+    working_dir: /app
+    # This command installs requirements and keeps the container running
+    command: sh -c "pip install --no-cache-dir -r etl/requirements.txt && sleep infinity"
+    depends_on:
+      - postgres
+
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.8.2
+    platform: linux/amd64
+    container_name: dbt
+    working_dir: /usr/app
+    volumes:
+      - ./dbt:/usr/app
+      - ./dbt_profiles:/root/.dbt
+    depends_on:
+      - postgres
+    # This is the most direct way to run a command.
+    # It tells Docker to run the 'sleep' program and give it
+    # one argument: 'infinity'. No shell interpretation is involved.
+    entrypoint: ["sleep", "infinity"]
+    ports:
+      - "8081:8080"
+    
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+volumes:
+  pg_data:
