@@ -37,26 +37,37 @@ models:
 
       - name: quantity
         description: Quantity of items ordered.
-        data_tests:
-          - not_null
+        data_tests: [not_null]
 
       - name: discount
         description: Discount applied on the order.
-        data_tests:
-          - not_null
+        data_tests: [not_null]
 
       - name: profit
         description: Profit generated from the order.
         data_tests: [not_null]
 
-  - name: fct_daily_sales
-    description: Final fact model with daily sales totals and profit margin.
+  - name: int_sales_by_date
+    description: Intermediate aggregation of sales, quantity, and profit by order_date.
     columns:
       - name: order_date
         description: Date of aggregated sales.
         data_tests:
           - not_null
           - unique
+      - name: total_sales
+        description: Total sales for the day (pre-margin calculation).
+        data_tests: [not_null]
+      - name: total_quantity
+        description: Total quantity sold on that day.
+        data_tests: [not_null]
+      - name: total_profit
+        description: Total profit for the day.
+        data_tests: [not_null]
+
+  - name: fct_daily_sales
+    description: Final fact model with daily sales totals and profit margin.
+    columns:
 
       - name: total_sales
         description: Total sales for the day.
@@ -74,3 +85,12 @@ models:
         description: Profit margin as a percentage of sales.
         data_tests:
           - not_null
+
+      - name: order_date
+        description: Date of aggregated sales.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('int_sales_by_date')
+              field: order_date      
